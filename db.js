@@ -7,6 +7,10 @@ const { name: appName } = require('./package.json')
 const homedir = process.env.HOME || process.env.PWD || os.homedir()
 const dbPath = path.join(homedir, `${appName}-cacheData`, 'data.json')
 
+const handleError = (e) => {
+  consola.error(e)
+}
+
 const db = {
   async exists(file = dbPath) {
     try {
@@ -16,21 +20,21 @@ const db = {
         await this.write({ list: [] })
       }
     } catch (e) {
-      consola.error(e)
+      handleError(e)
     }
   },
   async read(file = dbPath) {
     try {
       return await fs.readJSON(file)
     } catch (e) {
-      consola.error(e)
+      handleError(e)
     }
   },
   async write(object, file = dbPath) {
     try {
       await fs.writeJson(file, object)
     } catch (e) {
-      consola.error(e)
+      handleError(e)
     }
   }
 }
