@@ -1,7 +1,7 @@
 {
   "name": "facile-todo-cli",
   "bin": {
-    "todo": "cli.js"
+    "facile-todo": "cli.js"
   },
   "files": [
     "db.js",
