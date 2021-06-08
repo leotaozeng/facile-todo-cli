@@ -8,7 +8,7 @@
     "cli.js",
     "index.js"
   ],
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A simple command-line application written in Node.js that manages todo tasks.",
   "main": "index.js",
   "homepage": "https://github.com/Zeng95/facile-todo-cli",
