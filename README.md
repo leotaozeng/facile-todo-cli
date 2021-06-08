@@ -1,5 +1,5 @@
 # Node.js: todo-cli
-A simple command-line application written in Node.js that manages todo tasks.
+a CLI tool for managing an effective To-Do List including show/add/update/delete functionality.
 
 ## Installation
 ```
