@@ -12,8 +12,7 @@ yarn global add facile-todo-cli
 
 ## Usage
 ```bash
-// facile-todo
-Usage: cli [options] [command]
+Usage: facile-todo [options] [command]
 
 Options:
   -V, --version   output the version number
