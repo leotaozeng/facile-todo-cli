@@ -14,10 +14,10 @@ const getAllTasks = async (list) => {
         ...list.map((task, index) => {
           return {
             name: `${task.done ? '[✓]' : '[_]'} ${index + 1} - ${task.title}`, // Display in the list
-            value: index // Save in the answers hash
+            value: index, // Save in the answers hash
           }
-        })
-      ]
+        }),
+      ],
     })
 
     if (index >= 0) {
@@ -41,10 +41,15 @@ const chooseTask = async (list, index) => {
         { name: 'x Remove', value: 'removeTask' },
         { name: '- Title', value: 'updateTitle' },
         { name: '✓ Completed', value: 'markAsCompleted' },
-        { name: '_ Uncompleted', value: 'markAsUncompleted' }
-      ]
+        { name: '_ Uncompleted', value: 'markAsUncompleted' },
+      ],
     })
-    const actions = { removeTask, updateTitle, markAsCompleted, markAsUncompleted }
+    const actions = {
+      removeTask,
+      updateTitle,
+      markAsCompleted,
+      markAsUncompleted,
+    }
     actions[action] && actions[action](list, index)
   } catch (e) {
     handleError(e)
@@ -56,7 +61,7 @@ const createTask = async () => {
     const { task: newTask } = await inquirer.prompt({
       type: 'input',
       name: 'task',
-      message: "What's your new task?"
+      message: "What's your new task?",
     })
     this.add(newTask)
   } catch (e) {
@@ -81,7 +86,7 @@ const updateTitle = async (list, index) => {
       message: "What's your new title?",
       default() {
         return list[index].title
-      }
+      },
     })
     list[index].title = newTitle
     await db.write({ list })
@@ -112,34 +117,36 @@ const handleError = (e) => {
   consola.error(e)
 }
 
-module.exports = {
-  add: async (title) => {
-    try {
-      await db.exists() // 确认文件是否存在
+module.exports.add = async (title) => {
+  try {
+    await db.exists() // 确认文件是否存在
 
-      const { list } = await db.read() // 读取之前的任务
-      const task = { title, done: false }
+    const { list } = await db.read() // 读取之前的任务
+    const task = { title, done: false }
 
-      list.push(task) // 往里面添加一个 title 任务
+    list.push(task) // 往里面添加一个 title 任务
 
-      await db.write({ list }) // 存储任务到文件
-    } catch (e) {
-      handleError(e)
-    }
-  },
-  clear: async () => {
-    try {
-      await db.write({ list: [] }) // Clear the list array
-    } catch (e) {
-      handleError(e)
-    }
-  },
-  showAll: async () => {
-    try {
-      const { list } = await db.read()
-      getAllTasks(list)
-    } catch (e) {
-      handleError(e)
-    }
+    await db.write({ list }) // 存储任务到文件
+  } catch (e) {
+    handleError(e)
+  }
+}
+
+module.exports.clear = async () => {
+  try {
+    await db.write({ list: [] }) // Clear the list array
+  } catch (e) {
+    handleError(e)
+  }
+}
+
+module.exports.showAll = async () => {
+  try {
+    await db.exists() // 确认文件是否存在
+
+    const { list } = await db.read()
+    getAllTasks(list)
+  } catch (e) {
+    handleError(e)
   }
 }

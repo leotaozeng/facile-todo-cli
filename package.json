@@ -1,13 +1,28 @@
 {
-  "name": "node-todo",
-  "version": "0.0.1",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "facile-todo-cli",
+  "bin": {
+    "todo": "cli.js"
   },
-  "keywords": [],
-  "author": "",
+  "files": [
+    "db.js",
+    "cli.js",
+    "index.js"
+  ],
+  "version": "0.0.1",
+  "description": "A simple command-line application written in Node.js that manages todo tasks.",
+  "main": "index.js",
+  "homepage": "https://github.com/Zeng95/facile-todo-cl",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zeng95/facile-todo-cl"
+  },
+  "keywords": [
+    "cli",
+    "todo",
+    "nodejs",
+    "javascript"
+  ],
+  "author": "Leo Zeng",
   "license": "MIT",
   "dependencies": {
     "commander": "^7.2.0",

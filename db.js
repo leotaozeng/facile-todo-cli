@@ -36,7 +36,7 @@ const db = {
     } catch (e) {
       handleError(e)
     }
-  }
+  },
 }
 
 module.exports = db

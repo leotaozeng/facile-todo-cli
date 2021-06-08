@@ -1,6 +1,7 @@
+#!/usr/bin/env node
 const api = require('./index')
+const pkg = require('./package.json')
 const { program } = require('commander')
-const { version } = require('./package.json')
 
 const displayAll = async () => {
   try {
@@ -45,5 +46,5 @@ program
     }
   })
 
-program.version(version)
+program.version(pkg.version)
 program.parse(process.argv)
