@@ -24,3 +24,14 @@ Commands:
   create <name>   create a new task
   help [command]  display help for command
 ```
+### 1. Help
+
+### 2. Show all todo tasks
+
+### 3. Create a new todo task
+
+### 4. Delete a new todo task
+
+### 5. Mark a todo task as completed
+
+### 6. Mark a todo task as uncompleted
