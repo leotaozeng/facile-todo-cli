@@ -11,7 +11,9 @@ yarn global add facile-todo-cli
 ```
 
 ## Usage
+### 1. Help
 ```bash
+$ facile-todo
 Usage: facile-todo [options] [command]
 
 Options:
@@ -24,14 +26,20 @@ Commands:
   create <name>   create a new task
   help [command]  display help for command
 ```
-### 1. Help
 
 ### 2. Show all todo tasks
+```bash
+$ facile-todo show
+
+? What do you want to do? (Use arrow keys)
+❯ + Add
+  ↵ Quit
+  [_] 1 - Buy some fruit
+  [✓] 2 - Buy a beer
+  [_] 3 - Buy some water
+```
 
 ### 3. Create a new todo task
-
-### 4. Delete a new todo task
-
-### 5. Mark a todo task as completed
-
-### 6. Mark a todo task as uncompleted
+```bash
+facile-todo create "Buy some water"
+```
