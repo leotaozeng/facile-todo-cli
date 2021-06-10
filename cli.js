@@ -19,7 +19,7 @@ program
   .action(async () => {
     try {
       await api.clear()
-      consola.success('All tasks have been cleared successfully')
+      consola.success('All tasks have been deleted successfully')
     } catch (e) {
       consola.error(e)
     }
@@ -29,8 +29,8 @@ program
   .description('create a new task')
   .action(async (title) => {
     try {
-      await api.add(title.join(' '))
-      consola.success('A new task has been added successfully')
+      await api.add(title)
+      consola.success('A new task has been created successfully')
     } catch (e) {
       consola.error(e)
     }
