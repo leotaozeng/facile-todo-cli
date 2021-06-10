@@ -35,12 +35,11 @@ Commands:
 
 ```bash
 $ facile-todo show
-
-? What do you want to do? (Use arrow keys)
-❯ + Add
-  ↵ Quit
-  [_] 1 - Buy some fruit
-  [✓] 2 - Buy some water
+What do you want to do? (Use arrow keys)
++ Add
+↵ Quit
+[_] 1 - Buy some fruit
+[✓] 2 - Buy some water
 ```
 
 ### 3. Delete all todo tasks
