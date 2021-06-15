@@ -3,7 +3,12 @@ import db from './db';
 import consola from 'consola';
 import inquirer from 'inquirer';
 
-const getAllTasks = async (list: any[]) => {
+interface Task {
+  title: string;
+  done: boolean;
+}
+
+const getAllTasks = async (list: Task[]) => {
   try {
     const { index } = await inquirer.prompt({
       // Question object
@@ -28,11 +33,11 @@ const getAllTasks = async (list: any[]) => {
       createTask();
     }
   } catch (e) {
-    handleError(e);
+    consola.error(e);
   }
 };
 
-const chooseTask = async (list: any[], index: any) => {
+const chooseTask = async (list: Task[], index: number) => {
   try {
     const { action } = await inquirer.prompt({
       type: 'list',
@@ -54,7 +59,7 @@ const chooseTask = async (list: any[], index: any) => {
     };
     actions[action] && actions[action](list, index);
   } catch (e) {
-    handleError(e);
+    consola.error(e);
   }
 };
 
@@ -67,23 +72,20 @@ const createTask = async () => {
     });
     add(newTask);
   } catch (e) {
-    handleError(e);
+    consola.error(e);
   }
 };
 
-const removeTask = async (list: any[], index: any) => {
+const removeTask = async (list: Task[], index: number) => {
   try {
     list.splice(index, 1);
     await db.write({ list });
   } catch (e) {
-    handleError(e);
+    consola.error(e);
   }
 };
 
-const updateTitle = async (
-  list: { [x: string]: { title: any } },
-  index: string | number
-) => {
+const updateTitle = async (list: Task[], index: number) => {
   try {
     const { title: newTitle } = await inquirer.prompt({
       type: 'input',
@@ -96,50 +98,40 @@ const updateTitle = async (
     list[index].title = newTitle;
     await db.write({ list });
   } catch (e) {
-    handleError(e);
+    consola.error(e);
   }
 };
 
-const markAsCompleted = async (
-  list: { [x: string]: { done: boolean } },
-  index: string | number
-) => {
+const markAsCompleted = async (list: Task[], index: number) => {
   try {
     list[index].done = true;
     await db.write({ list });
   } catch (e) {
-    handleError(e);
+    consola.error(e);
   }
 };
 
-const markAsUncompleted = async (
-  list: { [x: string]: { done: boolean } },
-  index: string | number
-) => {
+const markAsUncompleted = async (list: Task[], index: number) => {
   try {
     list[index].done = false;
     await db.write({ list });
   } catch (e) {
-    handleError(e);
+    consola.error(e);
   }
-};
-
-const handleError = (e: any) => {
-  consola.error(e);
 };
 
 const add = async (title: string) => {
   try {
-    await db.exists(); // 确认文件是否存在
+    await db.exists(); // * 确认文件是否存在
 
-    const { list } = await db.read(); // 读取之前的任务
+    const { list } = await db.read(); // * 读取之前的任务
     const task = { title, done: false };
 
-    list.push(task); // 往里面添加一个 title 任务
+    list.push(task); // * 往里面添加一个 task
 
-    await db.write({ list }); // 存储任务到文件
+    await db.write({ list }); // * 存储任务到文件
   } catch (e) {
-    handleError(e);
+    consola.error(e);
   }
 };
 
@@ -147,18 +139,17 @@ const clear = async () => {
   try {
     await db.write({ list: [] }); // Clear the list array
   } catch (e) {
-    handleError(e);
+    consola.error(e);
   }
 };
 
 const showAll = async () => {
   try {
-    await db.exists(); // 确认文件是否存在
-
+    await db.exists(); // * 确认文件是否存在
     const { list } = await db.read();
     getAllTasks(list);
   } catch (e) {
-    handleError(e);
+    consola.error(e);
   }
 };
 

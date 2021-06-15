@@ -1,38 +1,44 @@
 import os from 'os';
 import fs from 'fs-extra';
-import pkg from './package.json';
 import path from 'path';
+import pkg from './package.json';
 import consola from 'consola';
 
-const homedir = process.env.HOME || process.env.PWD || os.homedir();
+const homedir = os.homedir() || process.env.HOME; // * the string path of the current user's home directory
 const dbPath = path.join(homedir, `${pkg.name}-cacheData`, 'data.json');
 
-const db = {
-  async exists(file: string = dbPath) {
-    try {
-      const exists = await fs.pathExists(file);
-      if (!exists) {
-        await fs.ensureFile(file);
-        await this.write({ list: [] });
-      }
-    } catch (e) {
-      consola.error(e);
+interface Task {
+  title: string;
+  done: boolean;
+}
+
+const exists = async (file: string = dbPath) => {
+  try {
+    const exists = await fs.pathExists(file);
+    console.log(exists);
+    if (!exists) {
+      await fs.ensureFile(file);
+      await write({ list: [] }, file);
     }
-  },
-  async read(file: string = dbPath) {
-    try {
-      return await fs.readJSON(file);
-    } catch (e) {
-      consola.error(e);
-    }
-  },
-  async write(object: { list: any }, file: string = dbPath) {
-    try {
-      await fs.writeJson(file, object);
-    } catch (e) {
-      consola.error(e);
-    }
-  },
+  } catch (e) {
+    consola.error(e);
+  }
 };
 
-export default db;
+const read = async (file: string = dbPath) => {
+  try {
+    return await fs.readJSON(file);
+  } catch (e) {
+    consola.error(e);
+  }
+};
+
+const write = async (object: { list: Task[] }, file: string = dbPath) => {
+  try {
+    await fs.writeJson(file, object);
+  } catch (e) {
+    consola.error(e);
+  }
+};
+
+export default { exists, read, write };
